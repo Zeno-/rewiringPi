@@ -1,6 +1,5 @@
 /***********************************************************************
  *    Copyright (c) 2016 Craig Robbins
- *    Copyright (c) 2012-2016 Gordon Henderson
  ***********************************************************************
  *    This file is part of rewiringPi
  *
@@ -18,14 +17,10 @@
  *    along with rewiringPi.  If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef REWIRINGPI_TYPES_H
+#define REWIRINGPI_TYPES_H
 
-extern int  softToneCreate (int pin);
-extern void softToneStop   (int pin);
-extern void softToneWrite  (int pin, int freq);
+#include <stdbool.h>
+#include <stdint.h>
 
-#ifdef __cplusplus
-}
-#endif
+#endif // REWIRINGPI_TYPES_H

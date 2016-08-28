@@ -1,31 +1,22 @@
-/*
- * wiringPi:
- *	Arduino look-a-like Wiring library for the Raspberry Pi
- *	Copyright (c) 2012-2015 Gordon Henderson
- *	Additional code for pwmSetClock by Chris Hall <chris@kchall.plus.com>
- *
- *	Thanks to code samples from Gert Jan van Loo and the
- *	BCM2835 ARM Peripherals manual, however it's missing
- *	the clock section /grr/mutter/
+/***********************************************************************
+ *    Copyright (c) 2016 Craig Robbins
+ *    Copyright (c) 2012-2016 Gordon Henderson
  ***********************************************************************
- * This file is part of wiringPi:
- *	https://projects.drogon.net/raspberry-pi/wiringpi/
+ *    This file is part of rewiringPi
  *
- *    wiringPi is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
+ *    rewiringPi is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *    wiringPi is distributed in the hope that it will be useful,
+ *    rewiringPi is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU Lesser General Public License for more details.
  *
- *    You should have received a copy of the GNU Lesser General Public
- *    License along with wiringPi.
- *    If not, see <http://www.gnu.org/licenses/>.
- ***********************************************************************
- */
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with rewiringPi.  If not, see <http://www.gnu.org/licenses/>.
+ **********************************************************************/
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -50,6 +41,7 @@
 #include "softTone.h"
 
 #include "wiringPi.h"
+#include "types.h"
 
 // Environment Variables
 
@@ -178,7 +170,7 @@ static volatile uint32_t *timerIrqRaw;
 //	and PI_VERSION_X defines in wiringPi.h
 //	Only intended for the gpio command - use at your own risk!
 
-static int piModel2 = FALSE;
+static int piModel2 = false;
 
 const char *piModelNames[16] = {
 	"Model A",	//  0
@@ -260,12 +252,12 @@ static pthread_mutex_t pinMutex;
 
 // Debugging & Return codes
 
-int wiringPiDebug       = FALSE;
-int wiringPiReturnCodes = FALSE;
+int wiringPiDebug       = false;
+int wiringPiReturnCodes = false;
 
 // Use /dev/gpiomem ?
 
-int wiringPiTryGpioMem  = FALSE;
+int wiringPiTryGpioMem  = false;
 
 // sysFds:
 //	Map a file descriptor from the /sys/class/gpio/gpioX/value
@@ -660,7 +652,7 @@ int piBoardRev(void)
 // See if it's BCM2708 or BCM2709
 
 	if (strstr(line, "BCM2709") != NULL) {	// Pi v2 - no point doing anything more at this point
-		piModel2 = TRUE;
+		piModel2 = true;
 		fclose(cpuFd);
 		return boardRev = 2;
 	} else if (strstr(line, "BCM2708") == NULL) {
@@ -2037,7 +2029,7 @@ int wiringPiSetup(void)
 	int   fd;
 	int   boardRev;
 	int   model, rev, mem, maker, overVolted;
-	static int alreadyCalled = FALSE;
+	static int alreadyCalled = false;
 
 // This is here to trap the unwary - those who's program appears to work then fails some
 //	time later with a weird error message because you run out of file-handles.
@@ -2045,17 +2037,17 @@ int wiringPiSetup(void)
 	if (alreadyCalled)
 		(void)wiringPiFailure(WPI_FATAL, "wiringPiSetup*: You must only call this once per program run. This is a fatal error. Please fix your code.\n");
 
-	alreadyCalled = TRUE;
+	alreadyCalled = true;
 
 
 	if (getenv(ENV_DEBUG) != NULL)
-		wiringPiDebug = TRUE;
+		wiringPiDebug = true;
 
 	if (getenv(ENV_CODES) != NULL)
-		wiringPiReturnCodes = TRUE;
+		wiringPiReturnCodes = true;
 
 	if (getenv(ENV_GPIOMEM) != NULL)
-		wiringPiTryGpioMem = TRUE;
+		wiringPiTryGpioMem = true;
 
 	if (wiringPiDebug) {
 		printf("wiringPi: wiringPiSetup called\n");
@@ -2226,7 +2218,7 @@ int wiringPiSetupSys(void)
 	int boardRev;
 	int pin;
 	char fName[128];
-	static int alreadyCalled = FALSE;
+	static int alreadyCalled = false;
 
 // This is here to trap the unwary - those who's program appears to work then fails some
 //	time later with a weird error message because you run out of file-handles.
@@ -2234,13 +2226,13 @@ int wiringPiSetupSys(void)
 	if (alreadyCalled)
 		(void)wiringPiFailure(WPI_FATAL, "wiringPiSetupSys: You must only call this once per program run. This is a fatal error. Please fix your code.\n");
 
-	alreadyCalled = TRUE;
+	alreadyCalled = true;
 
 	if (getenv(ENV_DEBUG) != NULL)
-		wiringPiDebug = TRUE;
+		wiringPiDebug = true;
 
 	if (getenv(ENV_CODES) != NULL)
-		wiringPiReturnCodes = TRUE;
+		wiringPiReturnCodes = true;
 
 	if (wiringPiDebug)
 		printf("wiringPi: wiringPiSetupSys called\n");
