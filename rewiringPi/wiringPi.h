@@ -18,8 +18,8 @@
  *    along with rewiringPi.  If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
 
-#ifndef	__WIRING_PI_H__
-#define	__WIRING_PI_H__
+#ifndef	REWIRING_PI_H
+#define	REWIRING_PI_H
 
 
 // wiringPi modes
@@ -219,4 +219,4 @@ extern unsigned int micros            (void);
 }
 #endif
 
-#endif
+#endif // REWIRING_PI_H
