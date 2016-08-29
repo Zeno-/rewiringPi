@@ -2,7 +2,8 @@
  *    Copyright (c) 2016 Craig Robbins
  *    Copyright (c) 2012-2016 Gordon Henderson
  ***********************************************************************
- *    This file is part of rewiringPi
+ *    This file is part of rewiringPi. rewiringPi is a fork of
+ *    wiringPi (https://projects.drogon.net/raspberry-pi/wiringpi/)
  *
  *    rewiringPi is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU Lesser General Public License as published by
