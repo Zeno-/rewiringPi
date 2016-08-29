@@ -109,3 +109,18 @@ int isPiModel2()
 {
 	return piModel2;
 }
+
+const char *getPiModelName(unsigned model_num)
+{
+	return piModelNames[model_num & 0x0f];
+}
+
+const char *getPiRevisionName(unsigned rev_num)
+{
+	return piRevisionNames[rev_num & 0x0f];
+}
+
+const char *getPiMakerName(unsigned maker_id)
+{
+	return piMakerNames[maker_id & 0x0f];
+}

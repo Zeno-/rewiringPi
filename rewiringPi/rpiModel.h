@@ -55,6 +55,9 @@ extern "C" {
 int setPiModel2(int value);
 int isPiModel2(void);
 
+const char *getPiModelName(unsigned model_num);
+const char *getPiRevisionName(unsigned rev_num);
+const char *getPiMakerName(unsigned maker_id);
 
 #ifdef __cplusplus
 }
