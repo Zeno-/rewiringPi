@@ -63,30 +63,6 @@
 #define	INT_EDGE_RISING		2
 #define	INT_EDGE_BOTH		3
 
-// Pi model types and version numbers
-//	Intended for the GPIO program Use at your own risk.
-
-#define	PI_MODEL_A		0
-#define	PI_MODEL_B		1
-#define	PI_MODEL_AP		2
-#define	PI_MODEL_BP		3
-#define	PI_MODEL_2		4
-#define	PI_ALPHA		5
-#define	PI_MODEL_CM		6
-#define	PI_MODEL_07		7
-#define	PI_MODEL_3		8
-#define	PI_MODEL_ZERO		9
-
-#define	PI_VERSION_1		0
-#define	PI_VERSION_1_1		1
-#define	PI_VERSION_1_2		2
-#define	PI_VERSION_2		3
-
-#define	PI_MAKER_SONY		0
-#define	PI_MAKER_EGOMAN		1
-#define	PI_MAKER_MBEST		2
-#define	PI_MAKER_UNKNOWN	3
-
 extern const char *piModelNames    [16];
 extern const char *piRevisionNames [16];
 extern const char *piMakerNames    [16];

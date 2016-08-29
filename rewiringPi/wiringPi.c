@@ -38,11 +38,12 @@
 #include <sys/ioctl.h>
 #include <asm/ioctl.h>
 
+#include "types.h"
 #include "softPwm.h"
 #include "softTone.h"
 
 #include "wiringPi.h"
-#include "types.h"
+#include "rpiModel.h"
 
 // Environment Variables
 
@@ -166,80 +167,6 @@ static volatile uint32_t *timerIrqRaw;
 #endif
 
 
-// Data for use with the boardId functions.
-//	The order of entries here to correspond with the PI_MODEL_X
-//	and PI_VERSION_X defines in wiringPi.h
-//	Only intended for the gpio command - use at your own risk!
-
-static int piModel2 = false;
-
-const char *piModelNames[16] = {
-	"Model A",	//  0
-	"Model B",	//  1
-	"Model A+",	//  2
-	"Model B+",	//  3
-	"Pi 2",	//  4
-	"Alpha",	//  5
-	"CM",		//  6
-	"Unknown07",	// 07
-	"Pi 3",	// 08
-	"Pi Zero",	// 09
-	"Unknown10",	// 10
-	"Unknown11",	// 11
-	"Unknown12",	// 12
-	"Unknown13",	// 13
-	"Unknown14",	// 14
-	"Unknown15",	// 15
-};
-
-const char *piRevisionNames[16] = {
-	"00",
-	"01",
-	"02",
-	"03",
-	"04",
-	"05",
-	"06",
-	"07",
-	"08",
-	"09",
-	"10",
-	"11",
-	"12",
-	"13",
-	"14",
-	"15",
-};
-
-const char *piMakerNames[16] = {
-	"Sony",	//	 0
-	"Egoman",	//	 1
-	"Embest",	//	 2
-	"Unknown",	//	 3
-	"Embest",	//	 4
-	"Unknown05",	//	 5
-	"Unknown06",	//	 6
-	"Unknown07",	//	 7
-	"Unknown08",	//	 8
-	"Unknown09",	//	 9
-	"Unknown10",	//	10
-	"Unknown11",	//	11
-	"Unknown12",	//	12
-	"Unknown13",	//	13
-	"Unknown14",	//	14
-	"Unknown15",	//	15
-};
-
-const int piMemorySize[8] = {
-	256,		//	 0
-	512,		//	 1
-	1024,		//	 2
-	0,		//	 3
-	0,		//	 4
-	0,		//	 5
-	0,		//	 6
-	0,		//	 7
-};
 
 // Time for easy calculations
 
@@ -653,7 +580,7 @@ int piBoardRev(void)
 // See if it's BCM2708 or BCM2709
 
 	if (strstr(line, "BCM2709") != NULL) {	// Pi v2 - no point doing anything more at this point
-		piModel2 = true;
+		setPiModel2(true);
 		fclose(cpuFd);
 		return boardRev = 2;
 	} else if (strstr(line, "BCM2708") == NULL) {
@@ -2068,7 +1995,7 @@ int wiringPiSetup(void)
 
 // Note that a Zero is a model 1
 
-	if (piModel2)
+	if (isPiModel2())
 		RASPBERRY_PI_PERI_BASE = 0x3F000000;
 	else
 		RASPBERRY_PI_PERI_BASE = 0x20000000;
