@@ -23,4 +23,14 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/* Some people like the capitalised names
+ */
+#ifndef TRUE
+#   define TRUE (!0)
+#endif
+
+#ifndef FALSE
+#   define FALSE 0
+#endif
+
 #endif // REWIRINGPI_TYPES_H
