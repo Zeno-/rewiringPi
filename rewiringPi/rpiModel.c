@@ -102,7 +102,7 @@ static const int piMemorySize[8] = {
 
 int setPiModel2(int value)
 {
-	piModel2 = !!value;
+	return piModel2 = !!value;
 }
 
 int isPiModel2()
