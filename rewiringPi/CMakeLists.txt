@@ -1,5 +1,6 @@
 add_library (rewiringPi
     rwPi.c
+    globals.c
     rpiModel.c
     softPwm.c
     softTone.c

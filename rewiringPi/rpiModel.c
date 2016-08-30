@@ -25,6 +25,7 @@
 
 #include "rpiModel.h"
 #include "types.h"
+#include "globals.h"
 
 /* Data for use with the boardId functions.
  * The order of entries here to correspond with the PI_MODEL_X

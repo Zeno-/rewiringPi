@@ -44,6 +44,7 @@
 
 #include "rwPi.h"
 #include "rpiModel.h"
+#include "globals.h"
 
 // Environment Variables
 
@@ -178,14 +179,9 @@ static int wiringPiMode = WPI_MODE_UNINITIALISED;
 static volatile int    pinPass = -1;
 static pthread_mutex_t pinMutex;
 
-// Debugging & Return codes
-
-int wiringPiDebug       = false;
-int wiringPiReturnCodes = false;
-
 // Use /dev/gpiomem ?
 
-int wiringPiTryGpioMem  = false;
+static int wiringPiTryGpioMem  = false;
 
 // sysFds:
 //	Map a file descriptor from the /sys/class/gpio/gpioX/value
