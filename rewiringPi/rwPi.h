@@ -179,9 +179,9 @@ extern int  piThreadCreate      (void *(*fn)(void *));
 extern void piLock              (int key);
 extern void piUnlock            (int key);
 
-// Schedulling priority
+// Scheduling priority
 
-extern int piHiPri (const int pri);
+extern int piHiPri (int pri);
 
 // Extras from arduino land
 
