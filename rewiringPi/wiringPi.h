@@ -155,8 +155,6 @@ extern int  wiringPiSetupPiFaceForGpioProg (void);	// Don't use this - for gpio 
 
 // On-Board Raspberry Pi hardware specific stuff
 
-extern          int  piBoardRev          (void);
-extern          void piBoardId           (int *model, int *rev, int *mem, int *maker, int *overVolted);
 extern          int  wpiPinToGpio        (int wpiPin);
 extern          int  physPinToGpio       (int physPin);
 extern          void setPadDrive         (int group, int value);

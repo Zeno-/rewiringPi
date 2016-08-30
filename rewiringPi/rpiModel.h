@@ -47,17 +47,26 @@
 #define	PI_MAKER_MBEST      2
 #define	PI_MAKER_UNKNOWN    3
 
+enum MemorySizeId {
+    PI_MEMORY_256,
+    PI_MEMORY_512,
+    PI_MEMORY_1024
+};
+
 /**********************************************************************/
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int setPiModel2(int value);
 int isPiModel2(void);
 
 const char *getPiModelName(unsigned model_num);
 const char *getPiRevisionName(unsigned rev_num);
 const char *getPiMakerName(unsigned maker_id);
+int getPiMemorySize(enum MemorySizeId mem_sz_id);
+
+int  piBoardRev(void);
+void piBoardId(int *model, int *rev, int *mem, int *maker, int *overVolted);
 
 #ifdef __cplusplus
 }
