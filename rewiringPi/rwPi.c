@@ -42,7 +42,7 @@
 #include "softPwm.h"
 #include "softTone.h"
 
-#include "wiringPi.h"
+#include "rwPi.h"
 #include "rpiModel.h"
 
 // Environment Variables

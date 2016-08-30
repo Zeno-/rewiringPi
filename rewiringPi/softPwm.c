@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#include "wiringPi.h"
+#include "rwPi.h"
 #include "softPwm.h"
 
 // MAX_PINS:
