@@ -60,8 +60,8 @@ extern "C" {
 
 int isPiModel2(void);
 
-const char *getPiModelName(unsigned model_num);
-const char *getPiRevisionName(unsigned rev_num);
+const char *getPiModelName(unsigned model_id);
+const char *getPiRevisionName(unsigned rev_id);
 const char *getPiMakerName(unsigned maker_id);
 int getPiMemorySize(enum MemorySizeId mem_sz_id);
 

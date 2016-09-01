@@ -110,14 +110,14 @@ int isPiModel2(void)
 	return piModel2;
 }
 
-const char *getPiModelName(unsigned model_num)
+const char *getPiModelName(unsigned model_id)
 {
-	return piModelNames[model_num & 0x0f];
+	return piModelNames[model_id & 0x0f];
 }
 
-const char *getPiRevisionName(unsigned rev_num)
+const char *getPiRevisionName(unsigned rev_id)
 {
-	return piRevisionNames[rev_num & 0x0f];
+	return piRevisionNames[rev_id & 0x0f];
 }
 
 const char *getPiMakerName(unsigned maker_id)
@@ -183,6 +183,9 @@ int piBoardRev(void)
 		if (strncmp(line, "Hardware", 8) == 0)
 			break;
 
+	// TODO: If /proc/hardware is an empty stream (hack attempt?) then "line" here
+	// is not initialised and possibly an attack vector if there just happens
+	// to be no '\0' in the line array
 	if (strncmp(line, "Hardware", 8) != 0)
 		piBoardRevOops("No hardware line");
 
@@ -290,39 +293,51 @@ int piBoardRev(void)
  *		0000 - Error
  *		0001 - Not used
  *
- *	Original Pi boards:
- *		0002 - Model B,  Rev 1,   256MB, Egoman
- *		0003 - Model B,  Rev 1.1, 256MB, Egoman, Fuses/D14 removed.
+ *      Original Pi boards:
+ *              0002 - Model B,  Rev 1,   256MB, Egoman
+ *              0003 - Model B,  Rev 1.1, 256MB, Egoman, Fuses/D14 removed.
  *
- *	Newer Pi's with remapped GPIO:
- *		0004 - Model B,  Rev 2,   256MB, Sony
- *		0005 - Model B,  Rev 2,   256MB, Qisda
- *		0006 - Model B,  Rev 2,   256MB, Egoman
- *		0007 - Model A,  Rev 2,   256MB, Egoman
- *		0008 - Model A,  Rev 2,   256MB, Sony
- *		0009 - Model A,  Rev 2,   256MB, Qisda
- *		000d - Model B,  Rev 2,   512MB, Egoman	(Red Pi, Blue Pi?)
- *		000e - Model B,  Rev 2,   512MB, Sony
- *		000f - Model B,  Rev 2,   512MB, Qisda
- *		0010 - Model B+, Rev 1.2, 512MB, Sony
- *		0011 - Pi CM,    Rev 1.2, 512MB, Sony
- *		0012 - Model A+  Rev 1.2, 256MB, Sony
- *		0014 - Pi CM,    Rev 1.1, 512MB, Sony (Actual Revision might be different)
- *		0015 - Model A+  Rev 1.1, 256MB, Sony
+ *      Newer Pi's with remapped GPIO:
+ *              0004 - Model B,  Rev 1.2, 256MB, Sony
+ *              0005 - Model B,  Rev 1.2, 256MB, Egomnn
+ *              0006 - Model B,  Rev 1.2, 256MB, Egoman
  *
- *	A small thorn is the olde style overvolting - that will add in
- *		1000000
+ *              0007 - Model A,  Rev 1.2, 256MB, Egoman
+ *              0008 - Model A,  Rev 1.2, 256MB, Sony
+ *              0009 - Model A,  Rev 1.2, 256MB, Egoman
  *
- *	The Pi compute module has an revision of 0011 or 0014 - since we only
- *	check the last digit, then it's 1, therefore it'll default to not 2 or
- *	3 for a	Rev 1, so will appear as a Rev 2. This is fine for the most part, but
- *	we'll properly detect the Compute Module later and adjust accordingly.
+ *              000d - Model B,  Rev 1.2, 512MB, Egoman (Red Pi, Blue Pi?)
+ *              000e - Model B,  Rev 1.2, 512MB, Sony
+ *              000f - Model B,  Rev 1.2, 512MB, Egoman
+ *
+ *              0010 - Model B+, Rev 1.2, 512MB, Sony
+ *              0013 - Model B+  Rev 1.2, 512MB, Embest
+ *              0016 - Model B+  Rev 1.2, 512MB, Sony
+ *              0019 - Model B+  Rev 1.2, 512MB, Egoman
+ *
+ *              0011 - Pi CM,    Rev 1.1, 512MB, Sony
+ *              0014 - Pi CM,    Rev 1.1, 512MB, Embest
+ *              0017 - Pi CM,    Rev 1.1, 512MB, Sony
+ *              001a - Pi CM,    Rev 1.1, 512MB, Egoman
+ *
+ *              0012 - Model A+  Rev 1.1, 256MB, Sony
+ *              0015 - Model A+  Rev 1.1, 256MB, Embest
+ *              0018 - Model A+  Rev 1.1, 256MB, Sony
+ *              001b - Model A+  Rev 1.1, 256MB, Egoman
+ *
+ *      A small thorn is the olde style overvolting - that will add in
+ *              1000000
+ *
+ *      The Pi compute module has an revision of 0011 or 0014 - since we only
+ *      check the last digit, then it's 1, therefore it'll default to not 2 or
+ *      3 for a Rev 1, so will appear as a Rev 2. This is fine for the most part, but
+ *      we'll properly detect the Compute Module later and adjust accordingly.
  *
  * And then things changed with the introduction of the v2...
  *
  * For Pi v2 and subsequent models - e.g. the Zero:
  *
- *  [USER:8][NEW:1][MEMSIZE:3][MANUFACTURER:4][PROCESSOR:4][TYPE:8][REV:4]
+ *   [USER:8] [NEW:1] [MEMSIZE:3] [MANUFACTURER:4] [PROCESSOR:4] [TYPE:8] [REV:4]
  *   NEW          23: will be 1 for the new scheme, 0 for the old scheme
  *   MEMSIZE      20: 0=256M 1=512M 2=1G
  *   MANUFACTURER 16: 0=SONY 1=EGOMAN 2=EMBEST

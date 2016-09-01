@@ -63,14 +63,6 @@
 #define	INT_EDGE_RISING		2
 #define	INT_EDGE_BOTH		3
 
-extern const char *piModelNames    [16];
-extern const char *piRevisionNames [16];
-extern const char *piMakerNames    [16];
-extern const int   piMemorySize    [ 8];
-
-
-//	Intended for the GPIO program Use at your own risk.
-
 // Threads
 
 #define	PI_THREAD(X)	void *X (void *dummy)
